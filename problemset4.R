@@ -81,3 +81,31 @@ setMethod("PlayGame", "door", #Created method for door objects called PlayGame
               object@winner<-FALSE #If not same, changes winner to FALSE
             }
           })
+
+#Simulation
+#1.
+#Ran simulation of game 1,000 times where players choose not to switch. Evaluated percentage of time they win car.
+simulationNot<-new("door", chosenDoor = sample(1:3, 1), carDoor = sample(1:3, 1), switch = FALSE, winner = FALSE)
+percentage<-0
+PlayGame(simulationNot)@winner
+for(i in 1:1000){
+  if(PlayGame(simulationNot)@winner==TRUE){
+    percentage<-percentage+1
+  }
+}
+percentage/1000
+
+#2.
+#Ran simulation of game 1,000 times where players choose to switch. Evaluated percentage of time they win car.
+simulationChoose<-new("door", chosenDoor = sample(1:3, 1), carDoor = sample(1:3, 1), switch = FALSE, winner = FALSE)
+percentage<-0
+PlayGame(simulationChoose)@winner
+for(i in 1:1000){
+  if(PlayGame(simulationChoose)@winner==TRUE){
+    percentage<-percentage+1
+  }
+}
+percentage/1000
+
+#3.
+#The strategy of choosing to switch is best. It leads to a winner 2/3 of the time, as opposed to 1/3 of the time.
