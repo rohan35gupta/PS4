@@ -29,3 +29,23 @@ setClass(Class="door", #Defined new S4 class door
            winner = c()
          )
          )
+
+new("door") #Construction function allows user to create door object
+
+setValidity("door", function(object){ #Validation function checks whether values stored in slots appropriately structured
+  if(!(object@chosenDoor %in% 1:3)){
+    return("@chosenDoor is not a valid value")
+  }
+  if(!(object@carDoor %in% 1:3)){
+    return("@carDoor is not a valid value")
+  }
+  if(!(object@switch %in% c(TRUE,FALSE))){
+    return("@switch is not a valid value")
+  }
+  if(!(object@winner %in% c(TRUE,FALSE))){
+    return("@winner is not a valid value")
+  }
+}
+)
+
+#2.
