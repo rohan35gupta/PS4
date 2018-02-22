@@ -49,3 +49,35 @@ setValidity("door", function(object){ #Validation function checks whether values
 )
 
 #2.
+setGeneric("PlayGame", #Created generic
+           function(object="door"){
+             standardGeneric("PlayGame")
+           })
+
+setMethod("PlayGame", "door", #Created method for door objects called PlayGame
+          function(object){
+            object@carDoor<-sample(1:3, 1) #Draws random number between 1 & 3 that presents door behind which car hidden & adds to carDoor slot
+            first<-sample(1:3, 1) #Draws random number between 1 & 3 that presents door chosen first
+            if(object@switch==FALSE){ #If switch=FALSE, random draw added to chosenDoor slot
+              object@chosenDoor<-first
+            }
+            else if(object@switch==TRUE){ #If switch=TRUE, random door chosen such that
+              a<-object@carDoor #Does not contain car
+              b<-object@chosenDoor #Not first door chosen by contestant
+              remove<-1:3
+              if(a!=b){
+                remove<-remove[-c(a,b)]
+              }
+              else if(a==b){
+                remove<-sample(remove[-a], 1)
+              }
+              contention<-1:3
+              object@chosenDoor<-sample(contention[-remove], 1) #Door removed from contention. Player chooses at random between doors not removed. Added to chosenDoor slot.
+            }
+            if(object@carDoor==object@chosenDoor){ #Compares two door slots
+              object@winner<-TRUE #If same, changes winner to TRUE
+            }
+            else{
+              object@winner<-FALSE #If not same, changes winner to FALSE
+            }
+          })
